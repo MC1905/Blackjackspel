@@ -58,6 +58,53 @@ namespace blackjackspel
             cards.Add(card);
         }
 
+        public int GetScore()
+        {
+            int score = 0;
+            int aceCount = 0;
+
+            foreach (Card card in cards)
+            {
+                if (card.Rank == "Ace")
+                {
+                    aceCount++;
+                    score += 11;
+                }
+                else if (card.Rank == "King" || card.Rank == "Queen" || card.Rank == "Jack")
+                {
+                    score += 10;
+                }
+                else
+                {
+                    score += int.Parse(card.Rank);
+                }
+            }
+
+            while (score > 21 && aceCount > 0)
+            {
+                score -= 10;
+                aceCount--;
+            }
+
+            return score;
+        }
+
+
+        public void DisplayHand()
+        {
+            Console.WriteLine($"Hand ({cards.Count} cards):");
+            foreach (var card in cards)
+            {
+                Console.WriteLine($"{card.Rank} of {card.Suit}");
+            }
+            Console.WriteLine($"Total score: {GetScore()}");
+        }
+
+
+
+
+
+
     }
 
 }

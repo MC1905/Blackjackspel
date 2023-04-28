@@ -54,5 +54,16 @@ namespace blackjackspel
                 Cards[n] = card;
             }
         }
+
+        public Card DealCard()
+        {
+            if (cards.Count == 0)
+            {
+                throw new Exception("No cards left in the deck!");
+            }
+            Card card = cards[0];
+            cards.RemoveAt(0);
+            return card;
+        }
     }
 }

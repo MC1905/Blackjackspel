@@ -25,7 +25,7 @@ namespace Blackjackspel
             // Deal initial cards
             playerHand.AddCard(deck.DealCard());
             dealerHand.AddCard(deck.DealCard());
-            playerHand.AddCard(deck.DealCard(true));
+            playerHand.AddCard(deck.DealCard());
             dealerHand.AddCard(deck.DealCard());
 
 
