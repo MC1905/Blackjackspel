@@ -1,4 +1,5 @@
-﻿using System;
+﻿using blackjackspel;
+using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 namespace Blackjackspel
@@ -39,11 +40,99 @@ namespace Blackjackspel
         static void StartGame()
         {
             Console.WriteLine("Starting a new game...");
-            const double initialMoney = 100.00;
+            Console.WriteLine("Welcome to the Blackjack game!");
 
-            double playerMoney = initialMoney;
-            Console.WriteLine($"your money count is: {playerMoney}$");
-        }
+            // Create a new deck and shuffle it
+            Deck deck = new Deck();
+            deck.Shuffle();
+
+            // Create player and dealer hands
+            Hand playerHand = new Hand();
+            Hand dealerHand = new Hand();
+
+            // Deal two cards to the player and two cards to the dealer
+            playerHand.Add(deck.DealCard());
+            dealerHand.Add(deck.DealCard());
+            playerHand.Add(deck.DealCard());
+            dealerHand.Add(deck.DealCard());
+
+            // Display the player's first card and the dealer's hand
+            Console.WriteLine("Dealer's hand:");
+            dealerHand.DisplayFirstCard();
+            Console.WriteLine("Your hand:");
+            playerHand.DisplayHand();
+
+            // Player's turn
+            while (true)
+            {
+                // Ask the player if they want to hit or stand
+                Console.Write("Do you want to hit or stand? ");
+                string input = Console.ReadLine().ToLower();
+
+                if (input == "hit")
+                {
+                    // Player wants to hit, deal another card
+                    Card newCard = deck.DealCard();
+                    playerHand.Add(newCard);
+                    Console.WriteLine("You drew the {0} of {1}.", newCard.Rank, newCard.Suit);
+                    playerHand.DisplayHand();
+                }
+                else if (input == "stand")
+                {
+                    // Player wants to stand, end player's turn
+                    Console.WriteLine("You chose to stand.");
+                    break;
+                }
+                else
+                {
+                    // Invalid input, ask again
+                    Console.WriteLine("Invalid input. Please enter 'hit' or 'stand'.");
+                }
+
+                // Check if player busts
+                if (playerHand.GetScore() > 21)
+                {
+                    Console.WriteLine("Bust! You lose.");
+                    return;
+                }
+            }
+
+            // Dealer's turn
+            Console.WriteLine("Dealer's turn:");
+            dealerHand.DisplayHand();
+
+            while (dealerHand.GetScore() < 17)
+            {
+                // Dealer must hit until their score is 17 or higher
+                Console.WriteLine("Dealer draws another card.");
+                Card newCard = deck.DealCard();
+                dealerHand.Add(newCard);
+                Console.WriteLine("Dealer drew the {0} of {1}.", newCard.Rank, newCard.Suit);
+                dealerHand.DisplayHand();
+            }
+
+            // Check if dealer busts
+            if (dealerHand.GetScore() > 21)
+            {
+                Console.WriteLine("Dealer busts! You win.");
+                return;
+            }
+
+            // Determine winner
+            if (playerHand.GetScore() > dealerHand.GetScore())
+            {
+                Console.WriteLine("You win!");
+            }
+            else if (playerHand.GetScore() < dealerHand.GetScore())
+            {
+                Console.WriteLine("You lose.");
+            }
+            else
+            {
+                Console.WriteLine("It's a tie.");
+            }
+        
+}
 
         static void ShowTutorial()
         {
