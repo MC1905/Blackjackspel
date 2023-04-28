@@ -25,17 +25,17 @@ namespace blackjackspel
                     if (int.TryParse(rank, out value))
                     {
                         // Numeric card
-                        Cards.Add(new Card { Suit = suit, Rank = rank, Value = value });
+                        Cards.Add(new Card(suit, rank) { Value = value });
                     }
                     else if (rank == "Ace")
                     {
                         // Ace can be 1 or 11
-                        Cards.Add(new Card { Suit = suit, Rank = rank, Value = 11 });
+                        Cards.Add(new Card(suit, rank) { Value = 11 });
                     }
                     else
                     {
                         // Face card
-                        Cards.Add(new Card { Suit = suit, Rank = rank, Value = 10 });
+                        Cards.Add(new Card(suit, rank) { Value = 10 });
                     }
                 }
             }
@@ -57,12 +57,12 @@ namespace blackjackspel
 
         public Card DealCard()
         {
-            if (cards.Count == 0)
+            if (Cards.Count == 0)
             {
                 throw new Exception("No cards left in the deck!");
             }
-            Card card = cards[0];
-            cards.RemoveAt(0);
+            Card card = Cards[0];
+            Cards.RemoveAt(0);
             return card;
         }
     }

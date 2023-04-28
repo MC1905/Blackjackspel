@@ -101,7 +101,10 @@ namespace blackjackspel
         }
 
 
-
+        public void DisplayFirstCard()
+        {
+            Console.WriteLine($"Your first card: {cards.First().Rank} of {cards.First().Suit}\n");
+        }
 
 
 
