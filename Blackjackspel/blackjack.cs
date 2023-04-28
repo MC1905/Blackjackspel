@@ -14,15 +14,14 @@ namespace Blackjackspel
 
         public void StartGame(int bet)
         {
-            // Create a new deck and shuffle it
+            
             deck = new Deck();
             deck.Shuffle();
 
-            // Create new player and dealer hands
             playerHand = new Hand();
             dealerHand = new Hand();
 
-            // Deal initial cards
+            
             playerHand.AddCard(deck.DealCard());
             dealerHand.AddCard(deck.DealCard());
             playerHand.AddCard(deck.DealCard());
